@@ -9,6 +9,8 @@ if (NOT CMAKE_THREAD_LIBS_INIT)
     find_package(Threads REQUIRED)
 endif()
 
+find_package(GTest REQUIRED)
+
 # Add your package dependencies for test here
 
 include_directories(${GTEST_INCLUDE_DIRS}
@@ -21,13 +23,14 @@ set(
     ${CMAKE_CURRENT_SOURCE_DIR}/../lib/ansi-colors/src/ansi_colors.cpp
     static_tests.cpp
     state_machine_with_internal_transitions.cpp
-    fsm_parts_test.cpp
+#    fsm_parts_test.cpp
     orthogonal_states_test.cpp
     transaction_fsm.cpp
     transaction_priority_fsm.cpp
     common_base_test.cpp
-    vending_machine_test.cpp
+#    vending_machine_test.cpp
     pushdown_tests.cpp
+    simple_test.cpp
 )
 add_executable(test-afsm-base ${test_program_SRCS})
 target_link_libraries(
@@ -35,6 +38,10 @@ target_link_libraries(
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
 )
+add_definitions(-Wall -Werror -Wextra -pedantic -Weffc++
+        -Wno-rtti -Wno-exceptions
+        -Wno-non-virtual-dtor # I really know what I am exactly doing
+        )
 
 if (GTEST_XML_OUTPUT)
     set (

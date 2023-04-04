@@ -3,7 +3,7 @@
 #    @author zmij
 #    @date Nov 30, 2015
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.24)
 
 # Set library name here
 set(lib_name afsm)
@@ -27,7 +27,7 @@ option(AFSM_BUILD_TESTS "Build test programs" ON)
 option(AFSM_BUILD_BENCHMARKS "Build benchmarks" OFF)
 option(AFSM_BUILD_EXAMPLES "Build example programs" OFF)
 
-option(USE_CCACHE "Use ccache for build" ON)
+option(USE_CCACHE "Use ccache for build" OFF)
 if (USE_CCACHE)
     find_program(CCACHE ccache)
     if (CCACHE)
@@ -46,10 +46,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
 if (NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 14)
+    set(CMAKE_CXX_STANDARD 20)
 endif()
 message(STATUS "AFSM C++ standard ${CMAKE_CXX_STANDARD}")
 add_definitions(-Wall -Werror -Wextra -pedantic -Weffc++
+        -Wno-rtti -Wno-exceptions
     -Wno-non-virtual-dtor # I really know what I am exactly doing
 )
 
